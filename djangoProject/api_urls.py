@@ -1,10 +1,10 @@
 from rest_framework import routers
-from posts.api_views import PostViewSet, VoteViewSet, CommentViewSet
+from posts.api_views import ArticleViewSet, LikeViewSet, CommentViewSet
 from accounts.api_views import UserViewSet
 
 
 router = routers.SimpleRouter()
-router.register('posts', PostViewSet, basename='posts')
+router.register('articles', ArticleViewSet, basename='articles')
 router.register('accounts', UserViewSet, basename='accounts')
 router.register('comments', CommentViewSet, basename='comments')
-router.register('votes', VoteViewSet, basename='votes')
+router.register('likes', LikeViewSet, basename='likes')

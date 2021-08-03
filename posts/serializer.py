@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import Post, Comment, Vote
+from .models import Article, Comment, Likes
 
 
-class PostSerializer(serializers.ModelSerializer):
+class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
+        model = Article
         fields = ('id', 'author', 'title', 'body', 'created_at',)
 
 
@@ -14,7 +14,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'post', 'reply', 'is_reply', 'body', 'created',)
 
 
-class VoteSerializer(serializers.ModelSerializer):
+class LikesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Vote
+        model = Likes
         fields = ('id', 'user', 'post')

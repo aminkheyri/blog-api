@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Post, Comment, Vote
+from .models import Article, Comment, Likes
 
 
-class PostAdmin(admin.ModelAdmin):
+class ArticleAdmin(admin.ModelAdmin):
     list_display = ('author', 'title')
 
 
@@ -10,8 +10,8 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('user', '__str__', 'post', 'is_reply')
 
 
-admin.site.register(Post, PostAdmin)
+admin.site.register(Article, ArticleAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Vote)
+admin.site.register(Likes)
 
 

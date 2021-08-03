@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Post(models.Model):
+class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     body = models.TextField()
@@ -14,9 +14,9 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment')
-    reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='rcomment')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
+    reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='comments')
     is_reply = models.BooleanField(default=False)
     body = models.TextField(max_length=400)
     created = models.DateTimeField(auto_now_add=True)
@@ -25,9 +25,9 @@ class Comment(models.Model):
         return f'{self.user} - {self.body[:30]}'
 
 
-class Vote(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='pvote')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='uvote')
+class Likes(models.Model):
+    post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
 
     def __str__(self):
         return f'{self.user} liked {self.post}'
