@@ -7,6 +7,12 @@ from djangoProject.permissions import IsStaffOrReadOnly, IsAuthorOrReadOnly
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    ordering_fields = ['author', 'created_at', 'title']
+    search_fields = [
+        'title',
+        'body',
+        'author__username',
+    ]
 
     def get_permissions(self):
         if self.action in ['list', 'create']:
@@ -19,6 +25,8 @@ class ArticleViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    ordering_fields = ['user', 'post', 'created']
+    search_fields = ['post']
 
     def get_permissions(self):
         if self.action in ['list', 'create']:
@@ -31,6 +39,8 @@ class CommentViewSet(viewsets.ModelViewSet):
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Likes.objects.all()
     serializer_class = LikesSerializer
+    ordering_fields = ['user', 'post']
+    search_fields = ['user', 'post']
 
     def get_permissions(self):
         if self.action in ['list', 'create']:
