@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
 class Article(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -14,7 +14,7 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
     reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='comments')
     is_reply = models.BooleanField(default=False)
@@ -27,7 +27,7 @@ class Comment(models.Model):
 
 class Likes(models.Model):
     post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='likes')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='likes')
 
     def __str__(self):
         return f'{self.user} liked {self.post}'

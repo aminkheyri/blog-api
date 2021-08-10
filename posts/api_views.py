@@ -2,6 +2,8 @@ from rest_framework import viewsets
 from .models import Article, Comment, Likes
 from .serializer import ArticleSerializer, CommentSerializer, LikesSerializer
 from djangoProject.permissions import IsStaffOrReadOnly, IsAuthorOrReadOnly
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -48,3 +50,8 @@ class LikeViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsStaffOrReadOnly, IsAuthorOrReadOnly]
         return [permission() for permission in permission_classes]
+
+
+class ShowComment(APIView):
+    def post(self, request, pk):
+        queryset = get_object_or_404(Article, pk=pk)
