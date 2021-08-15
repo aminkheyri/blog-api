@@ -12,7 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_('email address'), max_length=255, unique=True
     )
 
-    phone = models.IntegerField()
+    phone = models.CharField(_('phone number'), max_length=12)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
 
