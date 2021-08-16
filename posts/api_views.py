@@ -13,7 +13,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     search_fields = [
         'title',
         'body',
-        'author__username',
+        'author__email',
     ]
 
     def get_permissions(self):
