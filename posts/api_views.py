@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .models import Article, Comment, Likes
 from .serializer import ArticleSerializer, CommentSerializer, LikesSerializer
 from djangoProject.permissions import IsStaffOrReadOnly, IsAuthorOrReadOnly
@@ -52,6 +52,15 @@ class LikeViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
-class ShowComment(APIView):
-    def post(self, request, pk):
-        queryset = get_object_or_404(Article, pk=pk)
+class ReplyViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.filter(is_reply=True)
+    serializer_class = CommentSerializer
+    ordering_fields = ['user', 'post']
+    search_fields = ['user', 'post', 'body']
+
+    def get_permissions(self):
+        if self.action in ['list', 'create']:
+            permission_classes = [IsStaffOrReadOnly]
+        else:
+            permission_classes = [IsStaffOrReadOnly, IsAuthorOrReadOnly]
+        return [permission() for permission in permission_classes]
