@@ -23,8 +23,8 @@ class GetPhoneAndCode():
 
 
 class SendSms(APIView, GetPhoneAndCode):
-    def post(self, request, phone):
-        if phone:
+    def post(self, request):
+        if self.phone:
             self.rand_num = randint(100, 10000)
             # Sending Sms by kavenegar
             api = KavenegarAPI(
