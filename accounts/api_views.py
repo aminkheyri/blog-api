@@ -25,7 +25,8 @@ class GetPhoneAndCode():
 class SendSms(APIView, GetPhoneAndCode):
     def post(self, request, phone):
         if phone:
-            rand_num = randint(100, 10000)
+            self.rand_num = randint(100, 10000)
+            # Sending Sms by kavenegar
             api = KavenegarAPI(
                 '584D34694977644E474C64776950746533335A524B624F4A77644B314A56766956736366593077693972593D')
             params = {'sender': 'amin', 'receptor': self.phone, 'message': self.rand_num}
@@ -39,6 +40,7 @@ class VerifyOtp(APIView, GetPhoneAndCode):
     def post(self, request):
         code = request.data.get('code', None)
         if code == self.rand_num:
+            # creating a jwt token manually
             jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
             jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
