@@ -17,7 +17,6 @@ class UserViewSet(ModelViewSet):
 
 
 phone_dict = {}
-mobile = '09350917988'
 
 
 class SendSms(APIView):
@@ -32,7 +31,7 @@ class SendSms(APIView):
             # Sending Sms by kavenegar
             api = KavenegarAPI(
                 '584D34694977644E474C64776950746533335A524B624F4A77644B314A56766956736366593077693972593D')
-            params = {'sender': mobile, 'receptor': phone_number, 'message': rand_int}
+            params = {'sender': '10008663', 'receptor': phone_number, 'message': str(rand_int)}
             api.sms_send(params)
             return Response({"message": "sent"})
         return Response({"message": "failed"})
@@ -53,7 +52,7 @@ class VerifyOtp(APIView):
                 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
                 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
-                payload = jwt_payload_handler(request.id)
+                payload = jwt_payload_handler(request.user)
                 token = jwt_encode_handler(payload)
                 return HttpResponse('Get token auth request and data is as: {}'.format(token))
 
