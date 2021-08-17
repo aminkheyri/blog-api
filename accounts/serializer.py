@@ -2,12 +2,6 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
 
-class CreateUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = get_user_model()
-        fields = ('email', 'phone', 'password')
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
@@ -16,3 +10,12 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
             'id': {'read_only': True},
         }
+
+
+class PhoneNumberSerializer(serializers.Serializer):
+    phone = serializers.CharField()
+
+
+class RandomCodeSerializer(serializers.Serializer):
+    phone = serializers.CharField()
+    random_code = serializers.IntegerField()
