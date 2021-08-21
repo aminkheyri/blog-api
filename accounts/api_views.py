@@ -54,6 +54,6 @@ class VerifyOtp(APIView):
 
                 payload = jwt_payload_handler(request.user)
                 token = jwt_encode_handler(payload)
-                return HttpResponse('Get token auth request and data is as: {}'.format(token))
+                return Response({"your token": token})
 
         return Response({'error': 'invalid code'})
