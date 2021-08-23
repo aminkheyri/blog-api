@@ -5,7 +5,6 @@ from djangoProject.permissions import IsSuperUser
 from rest_framework.views import APIView
 from random import randint
 from kavenegar import *
-from django.http import HttpResponse
 from rest_framework_jwt.settings import api_settings
 from rest_framework.response import Response
 
